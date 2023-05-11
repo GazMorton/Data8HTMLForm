@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="Data8.css" rel="stylesheet">
+  <title>Email Validation Form</title>
+  <style>
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="header-page">
+  </div>
+  <h2>Email Validation Form</h2>
+  <form id="emailForm" onsubmit="validateEmail(event)">
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" required>
+    <span class="error" id="emailError"></span>
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    function validateEmail(event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Get the email input value
+      const emailInput = document.getElementById('email');
+      const email = emailInput.value.trim();
+
+      // Regular expression to check email format
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      // Array of valid email domain extensions
+      const validExtensions = ['.com', '.net', '.org', '.co.uk', '.co'];
+
+      // Check if email format is valid
+      if (!emailRegex.test(email)) {
+        document.getElementById('emailError').textContent = 'Invalid email format.';
+        return;
+      }
+
+      // Check if the email domain extension is valid
+      const validExtension = validExtensions.some(extension => email.endsWith(extension));
+      if (!validExtension) {
+        document.getElementById('emailError').textContent = 'Invalid email domain extension.';
+        return;
+      }
+
+      // Email is valid, submit the form
+      document.getElementById('emailForm').submit();
+    }
+  </script>
+</body>
+</html>
